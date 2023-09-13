@@ -5,9 +5,13 @@ public class DataChecking {
 
     public void check(HashMap<String, MonthlyReport> monthlyToReport, YearlyReport yearlyReport) {// проверка на ошибки
         ArrayList<MonthTotalPerYear> monthTotalPerYears = yearlyReport.monthTotalPerYears;
+
         for (MonthTotalPerYear monthTotalPerYear : monthTotalPerYears) {
             String month = monthTotalPerYear.month;
             MonthlyReport monthlyReport = monthlyToReport.get(month);
+            if (monthlyReport == null) {
+                continue;
+            }
             if (monthTotalPerYear.isExpense && !checkExpenses(monthTotalPerYear, monthlyReport)) {
                 System.out.println("Годовой и месячный отчеты не сошлись. За месяц: " + month
                         + ". Сумма расходов в годовом отчете: " + monthTotalPerYear.amount

@@ -5,11 +5,9 @@ public class YearlyReport {
 
     String year;
     ArrayList<MonthTotalPerYear> monthTotalPerYears;
-    HashMap<String, ArrayList<MonthTotalPerYear>> mapMonthTotalPerYears;
 
     public YearlyReport(String year) {
         monthTotalPerYears = new ArrayList<>();
-        mapMonthTotalPerYears = new HashMap<>();
         this.year = year;
     }
 

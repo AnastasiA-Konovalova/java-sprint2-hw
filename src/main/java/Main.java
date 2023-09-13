@@ -5,39 +5,46 @@ public class Main {
 
     public static void main(String[] args) {
         YearlyReport yearlyReport = null;
+        HashMap<String, MonthlyReport> monthlyToReport = null;
+
         Scanner scanner = new Scanner(System.in);
         ReportEngine reportEngine = new ReportEngine();
         DataChecking dataChecking = new DataChecking();
-        HashMap<String, MonthlyReport> monthlyToReport = new HashMap<>();
 
         while (true) {
             printMenu();
             int command = 0;
+            String exitCommand = "";
 
             if (scanner.hasNextInt()) {
                 command = scanner.nextInt();
             } else {
-                System.out.println("Такой команды нет. Выберете другую команду в промежутке от 1 до 6.");
-                scanner.next();
+                exitCommand = scanner.nextLine();
             }
 
-            while ((command < 1 || command > 7)) {
-                System.out.println("Такой команды нет. Выберете другую команду в промежутке от 1 до 6.");
+            while (!((command > 0 && command < 6 ) || exitCommand.equals("exit"))) {
+                System.out.println("Такой команды нет. Выберете другую команду в промежутке от 1 до 5 или команду выхода \"exit\"");
                 if (scanner.hasNextInt()) {
                     command = scanner.nextInt();
                 } else {
-                    scanner.next();
+                    exitCommand = scanner.nextLine();
                 }
             }
             if (command == 1) {
                 // метод
-                monthlyToReport.put("01", reportEngine.readMonthReport("m.202101.csv", "01"));
-                monthlyToReport.put("02", reportEngine.readMonthReport("m.202102.csv", "02"));
-                monthlyToReport.put("03", reportEngine.readMonthReport("m.202103.csv", "03"));
-                System.out.println("Месячные отчёты считаны.");
+                monthlyToReport = reportEngine.readAllMonthReport();
+                if (dataChecking.monthReportsNotLoad(monthlyToReport)) {
+                    System.out.println("Месячные отчёты не считаны.");
+                } else {
+                    System.out.println("Месячные отчёты считаны.");
+                }
             } else if (command == 2) {
                 yearlyReport = reportEngine.readYearReport("y.2021.csv", "2021");
-                System.out.println("Годовой отчет считан.");
+                if (yearlyReport == null) {
+                    System.out.println("Годовой отчет не считан.");
+                } else {
+                    System.out.println("Годовой отчет считан.");
+                }
             } else if (command == 3) {
                 if (dataChecking.monthReportsNotLoad(monthlyToReport)) {
                     System.out.println("Вы не загрузили данные месячных отчетов");
@@ -62,7 +69,7 @@ public class Main {
                     continue;
                 }
                 yearlyReport.yearlyInformation();
-            } else if (command == 6) {
+            } else if (exitCommand.equals("exit")) {
                 break;
             }
         }
@@ -75,7 +82,7 @@ public class Main {
         System.out.println("3 - Сверить отчёты");
         System.out.println("4 - Вывести информацию обо всех месячных отчётах");
         System.out.println("5 - Вывести информацию о годовом отчёте");
-        System.out.println("6 - Ввести код для завершения программы");
+        System.out.println("exit - Выйти из программы");
     }
 }
 
