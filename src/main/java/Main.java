@@ -29,9 +29,9 @@ public class Main {
                 } else {
                     exitCommand = scanner.nextLine();
                 }
+                scanner.next();
             }
             if (command == 1) {
-                // метод
                 monthlyToReport = reportEngine.readAllMonthReport();
                 if (dataChecking.monthReportsNotLoad(monthlyToReport)) {
                     System.out.println("Месячные отчёты не считаны.");

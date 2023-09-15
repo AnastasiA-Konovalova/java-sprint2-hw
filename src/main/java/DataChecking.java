@@ -37,7 +37,7 @@ public class DataChecking {
     }
 
     public boolean monthReportsNotLoad(HashMap<String, MonthlyReport> monthlyToReport) {
-        return monthlyToReport.values().isEmpty();
+        return monthlyToReport == null;
     }
 
     public boolean yearlyReportNotLoad(YearlyReport yearlyReport) {
